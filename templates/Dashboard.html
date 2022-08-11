@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="../static/main.js"></script>
+
 </head>
 <body>
 <form action="{{ url_for('main_Menu') }}" enctype=multipart/form-data method="POST">
@@ -41,7 +42,15 @@
             <div class="form-group">
 
                 <label for="Brand">Brand</label>
-                <select class="form-control" id="Brand" name="Brand">
+                <select class="form-control" id="Brand" name="Brand" onchange="populateModelList()">
+                </select>
+
+
+            </div>
+            <div class="form-group">
+
+                <label for="Model">Model</label>
+                <select class="form-control" id="Model" name="Model">
                 </select>
 
 
@@ -99,68 +108,10 @@
     <div class="col-3"></div>
 
 
-    <script>populateLists()</script>
-
     <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:last-child").html();
-            // Append table with add row form on add new button click
-            $(".add-new").click(function () {
-                $(this).attr("disabled", "disabled");
-                var index = $("table tbody tr:last-child").index();
-                var row = '<tr>' +
-                    '<td><input type="text" class="form-control" name="Date" id="Date"></td>' +
-                    '<td><input type="text" class="form-control" name="House_Number" id="House_Number"></td>' +
-                    '<td><input type="text" class="form-control" name="Street" id="Street"></td>' +
-                    '<td><input type="text" class="form-control" name="Color" id="Color"></td>' +
-                    '<td><input type="text" class="form-control" name="Brand" id="Brand"></td>' +
-                    '<td><input type="text" class="form-control" name="License" id="License Plate #"></td>' +
-                    '<td>' + actions + '</td>' +
-                    '</tr>';
-                $("table").append(row);
-                $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-            // Add row on add button click
-            $(document).on("click", ".add", function () {
-                var empty = false;
-                var input = $(this).parents("tr").find('input[type="text"]');
-                input.each(function () {
-                    if (!$(this).val()) {
-                        $(this).addClass("error");
-                        empty = true;
-                    } else {
-                        $(this).removeClass("error");
-                    }
-                });
-                $(this).parents("tr").find(".error").first().focus();
-                if (!empty) {
-                    input.each(function () {
-                        $(this).parent("td").html($(this).val());
-                    });
-                    $(this).parents("tr").find(".add, .edit").toggle();
-                    $(".add-new").removeAttr("disabled");
-                }
-            });
-            // Edit row on edit button click
-            $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
-            });
-            // Delete row on delete button click
-            $(document).on("click", ".delete", function () {
-                $(this).parents("tr").remove();
-                $(".add-new").removeAttr("disabled");
-            });
-        });
+        populateLists()
+        populateModelList()
     </script>
-
-
-    </div>
 </form>
 </body>
 </html>
