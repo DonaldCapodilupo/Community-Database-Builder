@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Response
 
 app = Flask(__name__)
+
 
 
 # @app.route('/Results', methods=["POST", "GET"])
@@ -17,9 +18,28 @@ def main_Menu():
             return redirect(url_for("dashboard"))
         elif request.form['submit_button'] == 'record_likes_button':
             return redirect(url_for("likes_Scraper"))
+        elif request.form['submit_button'] == 'scan_plates':
+            return redirect(url_for("plates_Scraper"))
 
     else:
         return render_template("main.html")
+
+
+
+
+@app.route('/Plate-Scanner', methods=["POST", "GET"])
+def plates_Scraper():
+    if request.method == "POST":
+        if request.form['submit_button'] == 'scan_plate':
+            from Backend import get_screenshot
+            plate_num = get_screenshot()
+            print(plate_num)
+            return render_template("Plate_Scraper.html", data=plate_num)
+        elif request.form['submit_button'] == 'go_back':
+            return  redirect(url_for("main_Menu"))
+    else:
+        return render_template("Plate_Scraper.html", data=[])
+
 
 
 @app.route('/Likes-Scraper', methods=["POST", "GET"])
