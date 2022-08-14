@@ -100,11 +100,13 @@ def get_screenshot():
     import cv2
     import os
     import pygetwindow as gw
+    from PIL import Image
 
-    win_obs = gw.getWindowsWithTitle('OBS 27.2.4')[0]
-    win_pycharm = gw.getWindowsWithTitle('Community-Database-Builder')[0]
+    win_obs = gw.getWindowsWithTitle('Fullscreen Projector')[0]
+    win_app = gw.getWindowsWithTitle('Plate Scraper')[0]
     win_obs.maximize()
     win_obs.activate()
+
 
     check_directory = os.listdir("Screenshots")
     while len(check_directory) < 2:
@@ -113,10 +115,23 @@ def get_screenshot():
         check_directory = os.listdir("Screenshots")
 
 
-    win_pycharm.maximize()
-    win_pycharm.activate()
+    win_app.maximize()
+    win_app.activate()
     print(check_directory[1] + " was found in directory.")
 
+
+    ##############################ONLY NEEDED IN TESTING - DUAL MONITORS.###############################################
+    #im = Image.open("Screenshots/" + check_directory[1])
+#
+    #width, height = im.size
+    #left = 0
+    #top = 0
+    #right = 1920
+    #bottom =  1080
+#
+    #im1 = im.crop((left,top,right,bottom))
+    #im1.save("Screenshots/" + check_directory[1])
+    ####################################################################################################################
     img = cv2.imread("Screenshots/" + check_directory[1],0)
 
     pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
@@ -126,9 +141,12 @@ def get_screenshot():
     # Adding custom options
 
     print(text)
-    possible_plate_data = [line_item.strip("") for line_item in text.split("\n") if 4 < len(line_item) < 9 and line_item != ""]
-    print(possible_plate_data)
-    ListDisplay(possible_plate_data).displayList()
+    possible_plate_data = [line_item.strip("").upper() for line_item in text.split("\n") if 4 < len(line_item) < 9 and line_item != ""]
+
+    os.remove("Screenshots/" + check_directory[1])
+    return possible_plate_data
+
+
 
 def get_Facebook_Interests(html_user_input):
     from bs4 import BeautifulSoup
