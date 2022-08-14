@@ -92,7 +92,64 @@ def csvToDatabase():
     text_file.close()
 
 
-    return data
+    return data 
+
+def get_screenshot():
+    import time
+    import pytesseract
+    import cv2
+    import os
+    import pygetwindow as gw
+
+    win_obs = gw.getWindowsWithTitle('OBS 27.2.4')[0]
+    win_pycharm = gw.getWindowsWithTitle('Community-Database-Builder')[0]
+    win_obs.maximize()
+    win_obs.activate()
+
+    check_directory = os.listdir("Screenshots")
+    while len(check_directory) < 2:
+        time.sleep(1.5)
+        print("Nothing uploaded yet.")
+        check_directory = os.listdir("Screenshots")
+
+
+    win_pycharm.maximize()
+    win_pycharm.activate()
+    print(check_directory[1] + " was found in directory.")
+
+    img = cv2.imread("Screenshots/" + check_directory[1],0)
+
+    pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+
+    text=(pytesseract.image_to_string(img)).lower()
+
+    # Adding custom options
+
+    print(text)
+    possible_plate_data = [line_item.strip("") for line_item in text.split("\n") if 4 < len(line_item) < 9 and line_item != ""]
+    print(possible_plate_data)
+    ListDisplay(possible_plate_data).displayList()
+
+def get_Facebook_Interests(html_user_input):
+    from bs4 import BeautifulSoup
+
+    return_List = []
+
+    #paste div starting with j83agx80 into test.html
+
+    soup = BeautifulSoup(html_user_input, 'html.parser')
+
+    spans = soup.find_all(
+        class_="d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d3f4x2em iv3no6db jq4qci2q a3bd9o3v lrazzd5p oo9gr5id hzawbc8m")
+
+    for text in spans:
+        print(text.string)
+        return_List.append(text.string)
+
+    return return_List
+
+
+
 
 
 information = {
@@ -115,4 +172,4 @@ information = {
 
 
 if __name__ == '__main__':
-    pass
+    get_screenshot()
