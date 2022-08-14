@@ -10,13 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 
     <script src="../static/main.js"></script>
 
 </head>
 <body>
-<form action="{{ url_for('main_Menu') }}" enctype=multipart/form-data method="POST">
+<form action="{{ url_for('dashboard') }}" enctype=multipart/form-data method="POST">
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6 d-flex justify-content-center">
@@ -72,7 +72,7 @@
 
             <div class="row">
                 <div class="col-4">
-                    <button type="submit" name="save_button" value="save_button" class="btn btn-primary btn-block mb-4">
+                    <button type="submit" name="submit_button" value="upload_plate" class="btn btn-primary btn-block mb-4">
                         Save
                     </button>
                 </div>
@@ -81,13 +81,10 @@
                 <div class="col-2"></div>
 
                 <div class="col-4">
-                    <!--
-                    <button type="button" name="save_button" value="results_button"
-                            class="btn btn-primary btn-block mb-4"
-                            onclick="displayInput(getInput())">
-                        Download Results
+                    <button type="submit" name="submit_button" value="go_back"
+                            class="btn btn-primary btn-block mb-4">
+                        Go Back
                     </button>
-                    -->
                 </div>
             </div>
         </div>
