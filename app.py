@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, redirect, url_for, Response
 app = Flask(__name__)
 
 
-
 # @app.route('/Results', methods=["POST", "GET"])
 # def results():
 #    if request.method == "POST":
@@ -20,11 +19,51 @@ def main_Menu():
             return redirect(url_for("likes_Scraper"))
         elif request.form['submit_button'] == 'scan_plates':
             return redirect(url_for("plates_Scraper"))
+        elif request.form['submit_button'] == 'add_user':
+            return redirect(url_for("add_User"))
 
     else:
         return render_template("main.html")
 
 
+@app.route('/Add-User', methods=["POST", "GET"])
+def add_User():
+    if request.method == "POST":
+        if request.form['submit_button'] == 'upload_new_user':
+            from werkzeug.utils import secure_filename
+            from Backend import write_New_Personal_File
+            import os
+
+            app.config['Upload Folder'] = 'Upload Folder'
+
+            personnel_info = {"Name":request.form.get("new_username"),
+                              "Dob":request.form.get("date_of_birth"),
+                              "Gender":request.form.get("gender"),
+                              "Address":request.form.get("address"),
+                              "Employer":request.form.get("employer"),
+                              "Marital Status":request.form.get("marital_status"),
+                              "Education":request.form.get("education"),
+                              "Languages":request.form.get("languages"),
+                              "Political Affiliation":request.form.get("political_affiliation"),
+                              "Family Members":request.form.get("family_members"),
+                              "Confirmed Criminal Activity":request.form.get("confirmed_criminal_activity"),
+                              "Possible Criminal Activity":request.form.get("possible_criminal_activity"),
+                              }
+
+            uploaded_file = request.files['user_img']
+            if uploaded_file.filename != '':
+                filename = secure_filename(request.form.get("new_username"))
+                personnel_info["Photo"] = filename
+
+
+            write_New_Personal_File(personnel_info,personnel_info["Photo"])
+
+
+            return render_template("Add-User.html")
+        elif request.form['submit_button'] == 'go_back':
+            return redirect(url_for("main_Menu"))
+    else:
+        return render_template("Add-User.html")
 
 
 @app.route('/Plate-Scanner', methods=["POST", "GET"])
@@ -36,10 +75,9 @@ def plates_Scraper():
             print(plate_num)
             return render_template("Plate_Scraper.html", data=plate_num)
         elif request.form['submit_button'] == 'go_back':
-            return  redirect(url_for("main_Menu"))
+            return redirect(url_for("main_Menu"))
     else:
         return render_template("Plate_Scraper.html", data=[])
-
 
 
 @app.route('/Likes-Scraper', methods=["POST", "GET"])
@@ -51,7 +89,7 @@ def likes_Scraper():
             likes_data = get_Facebook_Interests(str(request.form["text_to_scrape"]))
             return render_template("Likes_Scraper.html", data=likes_data)
         elif request.form['submit_button'] == 'go_back':
-            return  redirect(url_for("main_Menu"))
+            return redirect(url_for("main_Menu"))
     else:
         return render_template("Likes_Scraper.html", data=[])
 
@@ -61,7 +99,7 @@ def dashboard():
     from Backend import vehicles, colors, csvToDatabase
     if request.method == "POST":
         if request.form['submit_button'] == 'upload_plate':
-            from Backend import writeToCSV, today, licensePlateInformation
+            from Backend import writeToCSV, today
 
             writeToCSV([today,
                         request.form.get("House_Number"),

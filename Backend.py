@@ -1,18 +1,18 @@
 import sqlite3, datetime
 
-
 vehicles = (
-'Toyota', 'Honda', 'Chevrolet', 'Ford', 'Mercedes-Benz', 'Jeep', 'BMW', 'Porsche', 'Subaru', 'Nissan', 'Cadillac',
-'Volkswagen', 'Lexus', 'Audi', 'Volvo', 'Jaguar', 'GMC', 'Buick', 'Acura', 'Dodge', 'Hyundai',
-'Lincoln', 'Mazda', 'Land Rover', 'Tesla', 'Ram Trucks', 'Kia', 'Chrysler', 'Pontiac', 'Infiniti', 'Mitsubishi',
-'Oldsmobile', 'Fiat', 'Mini Cooper', 'Suzuki')
+    'Toyota', 'Honda', 'Chevrolet', 'Ford', 'Mercedes-Benz', 'Jeep', 'BMW', 'Porsche', 'Subaru', 'Nissan', 'Cadillac',
+    'Volkswagen', 'Lexus', 'Audi', 'Volvo', 'Jaguar', 'GMC', 'Buick', 'Acura', 'Dodge', 'Hyundai',
+    'Lincoln', 'Mazda', 'Land Rover', 'Tesla', 'Ram Trucks', 'Kia', 'Chrysler', 'Pontiac', 'Infiniti', 'Mitsubishi',
+    'Oldsmobile', 'Fiat', 'Mini Cooper', 'Suzuki')
 
 colors = ("Black", "Silver", "White", "Grey", "Red", "Blue", "Brown", "Green", "Beige", "Orange", "Gold", "Yellow",
           "Purple")
 
 today = str(datetime.date.today())
 
-#For iPhone
+
+# For iPhone
 class ListDisplay:
     def __init__(self, listToDisplay):
         self.listToDisplay = listToDisplay
@@ -54,28 +54,29 @@ class ListDisplay:
         # Return the variable
         return userChoiceFINAL
 
+
 def read_Database(database, table):
     import pandas as pd
-
 
     con = sqlite3.connect(database)
     df = pd.read_sql_query("SELECT * from " + table, con)
     con.close()
 
-
     return df
+
 
 def licensePlateInformation(user_Plate_Value):
     while len(user_Plate_Value) < 6:
         user_Plate_Value = user_Plate_Value + "%"
     return user_Plate_Value[:3].upper() + " " + user_Plate_Value[3:].upper()
 
-    #while len(user_Plate_Value) != 6:
+    # while len(user_Plate_Value) != 6:
     #    print("Invalid Number Of Characters -- Only 6 Allowed -- Try Again")
     #    user_Plate_Value = input("What is the license plate number of the "+ vehicle + "?: ").upper().replace(" ","")
-    #correct_Format = user_Plate_Value[:3] + " " + user_Plate_Value[3:]
-    #print("Recording as: " + correct_Format)
-    #return correct_Format
+    # correct_Format = user_Plate_Value[:3] + " " + user_Plate_Value[3:]
+    # print("Recording as: " + correct_Format)
+    # return correct_Format
+
 
 def writeToCSV(listOfInfo):
     import csv
@@ -84,15 +85,17 @@ def writeToCSV(listOfInfo):
     writer.writerow(listOfInfo)
     document.close()
 
+
 def csvToDatabase():
     import pandas as pd
-    data = pd.read_csv("data.csv").to_html(classes="table", index=False, table_id="datatable").replace("<thead>", "<thead class='thead-light'>")
+    data = pd.read_csv("data.csv").to_html(classes="table", index=False, table_id="datatable").replace("<thead>",
+                                                                                                       "<thead class='thead-light'>")
     text_file = open("templates/data.html", "w")
     text_file.write(data)
     text_file.close()
 
+    return data
 
-    return data 
 
 def get_screenshot():
     import time
@@ -107,45 +110,42 @@ def get_screenshot():
     win_obs.maximize()
     win_obs.activate()
 
-
     check_directory = os.listdir("Screenshots")
     while len(check_directory) < 2:
         time.sleep(1.5)
         print("Nothing uploaded yet.")
         check_directory = os.listdir("Screenshots")
 
-
     win_app.maximize()
     win_app.activate()
     print(check_directory[1] + " was found in directory.")
 
-
     ##############################ONLY NEEDED IN TESTING - DUAL MONITORS.###############################################
-    #im = Image.open("Screenshots/" + check_directory[1])
-#
-    #width, height = im.size
-    #left = 0
-    #top = 0
-    #right = 1920
-    #bottom =  1080
-#
-    #im1 = im.crop((left,top,right,bottom))
-    #im1.save("Screenshots/" + check_directory[1])
+    # im = Image.open("Screenshots/" + check_directory[1])
+    #
+    # width, height = im.size
+    # left = 0
+    # top = 0
+    # right = 1920
+    # bottom =  1080
+    #
+    # im1 = im.crop((left,top,right,bottom))
+    # im1.save("Screenshots/" + check_directory[1])
     ####################################################################################################################
-    img = cv2.imread("Screenshots/" + check_directory[1],0)
+    img = cv2.imread("Screenshots/" + check_directory[1], 0)
 
     pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
-    text=(pytesseract.image_to_string(img)).lower()
+    text = (pytesseract.image_to_string(img)).lower()
 
     # Adding custom options
 
     print(text)
-    possible_plate_data = [line_item.strip("").upper() for line_item in text.split("\n") if 4 < len(line_item) < 9 and line_item != ""]
+    possible_plate_data = [line_item.strip("").upper() for line_item in text.split("\n") if
+                           4 < len(line_item) < 9 and line_item != ""]
 
     os.remove("Screenshots/" + check_directory[1])
     return possible_plate_data
-
 
 
 def get_Facebook_Interests(html_user_input):
@@ -153,7 +153,7 @@ def get_Facebook_Interests(html_user_input):
 
     return_List = []
 
-    #paste div starting with j83agx80 into test.html
+    # paste div starting with j83agx80 into test.html
 
     soup = BeautifulSoup(html_user_input, 'html.parser')
 
@@ -167,27 +167,11 @@ def get_Facebook_Interests(html_user_input):
     return return_List
 
 
-
-
-
-information = {
-    "House":{
-        "Occupants":0,
-        "Occupant Names":[],
-        "Pets":0,
-        "Pet Names":[],
-    },
-    "People":{
-        "Name":["Interests","Political Affiliations","Sources"],
-    },
-    "Vehicles":{
-        "Color":"",
-        "Brand":"",
-        "Type":"",
-        "License Plate":"",
-    }
-}
+def write_New_Personal_File(information_dict, pic):
+    with open("Users/" + information_dict["Name"]+'.txt', 'w') as f:
+        for datapoint, value in information_dict.items():
+            f.write(datapoint + ": " + value +  '\n')
 
 
 if __name__ == '__main__':
-    get_screenshot()
+    pass
