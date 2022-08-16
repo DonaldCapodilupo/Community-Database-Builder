@@ -50,7 +50,7 @@ function showUserImage() {
         const file = ev.target.files[0]; // get the file
         const blobURL = URL.createObjectURL(file);
         img.src = blobURL;
-    }
+    };
 
 
 }
