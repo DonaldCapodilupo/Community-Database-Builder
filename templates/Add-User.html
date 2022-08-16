@@ -22,6 +22,9 @@
         <div class="col-4"></div>
         <div class="col-4">
             <h1>Add a user</h1>
+            {% if confirrmation %}
+                <h3>{{ confirrmation }} has been added to the database!</h3>
+            {% endif %}
         </div>
         <div class="col-4"></div>
     </div>
@@ -107,11 +110,23 @@
 
             <br>
             <br>
+            <div class="row">
 
-            <button type="submit" name="submit_button" value="upload_new_user"
-                    class="btn btn-primary btn-block mb-4">
-                Upload New User
-            </button>
+                <div class="col-5">
+                    <button type="submit" name="submit_button" value="upload_new_user"
+                            class="btn btn-primary btn-block mb-4">
+                        Upload New User
+                    </button>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-3">
+                    <button type="submit" name="submit_button" value="go_back"
+                            class="btn btn-primary btn-block mb-4">
+                        Go Back
+                    </button>
+                </div>
+            </div>
+
 
         </div>
         <div class="col-3"></div>

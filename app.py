@@ -34,7 +34,7 @@ def add_User():
             from Backend import write_New_Personal_File
             import os
 
-            app.config['Upload Folder'] = 'Upload Folder'
+            app.config['UPLOAD_FOLDER'] = 'Upload Folder'
 
             personnel_info = {"Name":request.form.get("new_username"),
                               "Dob":request.form.get("date_of_birth"),
@@ -52,14 +52,15 @@ def add_User():
 
             uploaded_file = request.files['user_img']
             if uploaded_file.filename != '':
-                filename = secure_filename(request.form.get("new_username"))
+                filename = secure_filename(request.form.get("new_username")) +'.jpg'
                 personnel_info["Photo"] = filename
+                uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 
             write_New_Personal_File(personnel_info,personnel_info["Photo"])
 
 
-            return render_template("Add-User.html")
+            return render_template("Add-User.html" , confirrmation=request.form.get("new_username"))
         elif request.form['submit_button'] == 'go_back':
             return redirect(url_for("main_Menu"))
     else:
