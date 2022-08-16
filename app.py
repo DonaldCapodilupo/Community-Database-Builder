@@ -48,7 +48,7 @@ def add_User():
     if request.method == "POST":
         if request.form['submit_button'] == 'upload_new_user':
             from werkzeug.utils import secure_filename
-            from Backend import write_New_Personal_File
+            from Backend import write_New_Personal_File, get_Facebook_Interests
             import os
 
             app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -73,6 +73,10 @@ def add_User():
                 personnel_info["Photo"] = filename
                 uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+
+            print(str(request.form["text_to_scrape"]))
+            likes_data = get_Facebook_Interests(str(request.form["text_to_scrape"]))
+            personnel_info["Likes"] = likes_data
 
             write_New_Personal_File(personnel_info,personnel_info["Photo"])
 
