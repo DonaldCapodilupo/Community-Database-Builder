@@ -168,10 +168,33 @@ def get_Facebook_Interests(html_user_input):
 
 
 def write_New_Personal_File(information_dict, pic):
-    with open("Users/" + information_dict["Name"]+'.txt', 'w') as f:
-        for datapoint, value in information_dict.items():
-            f.write(datapoint + ": " + value +  '\n')
+    import json
+    with open("Users/" + information_dict["Name"]+'.json', 'w') as outfile:
+        json.dump(information_dict,outfile)
+
+
+def get_Current_Personnel():
+    import os
+    personnel = [x.replace(".json","") for x in os.listdir("Users")]
+    return personnel
+
+def get_User_Json(user):
+    import json
+
+    with open('Users/' + user +'.json') as json_file:
+        data = json.load(json_file)
+    print(data)
+
+    return data
+
+    # Opening JSON file
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
-    pass
+    get_User_Json("Don Capodilupo")

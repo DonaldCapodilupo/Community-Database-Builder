@@ -2,14 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, Response
 
 app = Flask(__name__)
 
-
-# @app.route('/Results', methods=["POST", "GET"])
-# def results():
-#    if request.method == "POST":
-#        pass
-#    else:
-#        return render_template("data.html")
-
 @app.route('/', methods=["POST", "GET"])
 def main_Menu():
     if request.method == "POST":
@@ -21,9 +13,34 @@ def main_Menu():
             return redirect(url_for("plates_Scraper"))
         elif request.form['submit_button'] == 'add_user':
             return redirect(url_for("add_User"))
+        elif request.form['submit_button'] == 'view_users':
+            return redirect(url_for("view_Users"))
 
     else:
         return render_template("main.html")
+
+
+@app.route('/View-Users', methods=["POST", "GET"])
+def view_Users():
+    from Backend import get_Current_Personnel
+    if request.method == "POST":
+        if request.form['submit_button'] == 'go_back':
+            return redirect(url_for("main_Menu"))
+        elif request.form['submit_button'] == 'search':
+            from Backend import get_User_Json
+            user_search_choice = request.form.get("user_choice_preview")
+
+            user_photo_src = user_search_choice.replace(" ","_") +".jpg"
+            user_data = get_User_Json(request.form.get("user_choice_preview"))
+            personnel = get_Current_Personnel()
+
+            return render_template("View-Users.html", data= personnel, user_information = user_data, user_img = user_photo_src)
+
+    else:
+        personnel = get_Current_Personnel()
+        return render_template("View-Users.html", data= personnel)
+
+
 
 
 @app.route('/Add-User', methods=["POST", "GET"])
@@ -34,7 +51,7 @@ def add_User():
             from Backend import write_New_Personal_File
             import os
 
-            app.config['UPLOAD_FOLDER'] = 'Upload Folder'
+            app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
             personnel_info = {"Name":request.form.get("new_username"),
                               "Dob":request.form.get("date_of_birth"),
@@ -58,7 +75,6 @@ def add_User():
 
 
             write_New_Personal_File(personnel_info,personnel_info["Photo"])
-
 
             return render_template("Add-User.html" , confirrmation=request.form.get("new_username"))
         elif request.form['submit_button'] == 'go_back':
