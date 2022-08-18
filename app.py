@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, Response
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -19,36 +19,14 @@ def main_Menu():
     else:
         return render_template("main.html")
 
-
-@app.route('/View-Users', methods=["POST", "GET"])
-def view_Users():
-    from Backend import get_Current_Personnel
-    if request.method == "POST":
-        if request.form['submit_button'] == 'go_back':
-            return redirect(url_for("main_Menu"))
-        elif request.form['submit_button'] == 'search':
-            from Backend import get_User_Json
-            user_search_choice = request.form.get("user_choice_preview")
-
-            user_photo_src = user_search_choice.replace(" ","_") +".jpg"
-            user_data = get_User_Json(request.form.get("user_choice_preview"))
-            personnel = get_Current_Personnel()
-
-            return render_template("View-Users.html", data= personnel, user_information = user_data, user_img = user_photo_src)
-
-    else:
-        personnel = get_Current_Personnel()
-        return render_template("View-Users.html", data= personnel)
-
-
-
-
+#Personnel Database Add User
 @app.route('/Add-User', methods=["POST", "GET"])
 def add_User():
     if request.method == "POST":
         if request.form['submit_button'] == 'upload_new_user':
             from werkzeug.utils import secure_filename
-            from Backend import write_New_Personal_File, get_Facebook_Interests
+            from Backend import create_JSON_Personal_File
+            from Investigative_Functions import scrape_Facebook_Likes
             import os
 
             app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -75,18 +53,38 @@ def add_User():
 
 
             print(str(request.form["text_to_scrape"]))
-            likes_data = get_Facebook_Interests(str(request.form["text_to_scrape"]))
+            likes_data = scrape_Facebook_Likes(str(request.form["text_to_scrape"]))
             personnel_info["Likes"] = likes_data
 
-            write_New_Personal_File(personnel_info,personnel_info["Photo"])
+            create_JSON_Personal_File(personnel_info, personnel_info["Photo"])
 
             return render_template("Add-User.html" , confirrmation=request.form.get("new_username"))
         elif request.form['submit_button'] == 'go_back':
             return redirect(url_for("main_Menu"))
     else:
         return render_template("Add-User.html")
+#Personnel Database View Users
+@app.route('/View-Users', methods=["POST", "GET"])
+def view_Users():
+    from Backend import get_All_Current_Personnel
+    if request.method == "POST":
+        if request.form['submit_button'] == 'go_back':
+            return redirect(url_for("main_Menu"))
+        elif request.form['submit_button'] == 'search':
+            from Backend import read_JSON_Personal_File
+            user_search_choice = request.form.get("user_choice_preview")
 
+            user_photo_src = user_search_choice.replace(" ","_") +".jpg"
+            user_data = read_JSON_Personal_File(request.form.get("user_choice_preview"))
+            personnel = get_All_Current_Personnel()
 
+            return render_template("View-Users.html", data= personnel, user_information = user_data, user_img = user_photo_src)
+
+    else:
+        personnel = get_All_Current_Personnel()
+        return render_template("View-Users.html", data= personnel)
+
+#OBS to OCR Application
 @app.route('/Plate-Scanner', methods=["POST", "GET"])
 def plates_Scraper():
     if request.method == "POST":
@@ -100,7 +98,7 @@ def plates_Scraper():
     else:
         return render_template("Plate_Scraper.html", data=[])
 
-
+#Scrape Facebook Likes
 @app.route('/Likes-Scraper', methods=["POST", "GET"])
 def likes_Scraper():
     if request.method == "POST":
@@ -114,10 +112,10 @@ def likes_Scraper():
     else:
         return render_template("Likes_Scraper.html", data=[])
 
-
+#Manual License Plate Recording Software
 @app.route('/Dashboard', methods=["POST", "GET"])
 def dashboard():
-    from Backend import vehicles, colors, csvToDatabase
+    from Backend import vehicles, colors, csv_To_HTML
     if request.method == "POST":
         if request.form['submit_button'] == 'upload_plate':
             from Backend import writeToCSV, today
@@ -132,13 +130,13 @@ def dashboard():
                         ])
 
             return render_template("Dashboard.html", confirmation=request.form.get("License Plate #"),
-                                   data=csvToDatabase())
+                                   data=csv_To_HTML())
         elif request.form['submit_button'] == 'go_back':
             return redirect(url_for("main_Menu"))
 
     else:
 
-        return render_template("Dashboard.html", data=csvToDatabase())
+        return render_template("Dashboard.html", data=csv_To_HTML())
 
 
 if __name__ == '__main__':
