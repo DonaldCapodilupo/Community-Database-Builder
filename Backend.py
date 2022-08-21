@@ -39,6 +39,22 @@ def read_JSON_Personal_File(user):
 
     return data
 
+#For the personnel logging application. Currently only updates one value at a time.
+def updated_JSON_Personnel_File(info_list):
+    import json
+
+    user = "Users/" + info_list[0] + ".json"
+    print(user)
+    with open(user, "r") as jsonFile:
+        data = json.load(jsonFile)
+
+
+    for index, key in enumerate(data.keys()):
+        data[key] = info_list[index]
+
+    with open(user, "w") as jsonFile:
+        json.dump(data, jsonFile)
+
 #For the personnel viewing application
 def get_All_Current_Personnel():
     import os
@@ -54,4 +70,15 @@ def get_All_Current_Personnel():
 
 
 if __name__ == '__main__':
-    read_JSON_Personal_File("Don Capodilupo")
+    updated_JSON_Personnel_File("Don Capodilupo",
+                                {
+                                    "Name": "Don Capodilupo",
+                                    "Dob": "",
+                                    "Gender": "Male",
+                                    "Address": "",
+                                    "Employer": "",
+                                    "Marital Status": "Unknown",
+                                    "Cheeseburger": "Hardvard AND Yale",
+
+                                }
+                                )

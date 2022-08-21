@@ -15,6 +15,8 @@ def main_Menu():
             return redirect(url_for("add_User"))
         elif request.form['submit_button'] == 'view_users':
             return redirect(url_for("view_Users"))
+        elif request.form['submit_button'] == 'update_user':
+            return redirect(url_for("update_User"))
 
     else:
         return render_template("main.html")
@@ -83,6 +85,36 @@ def view_Users():
     else:
         personnel = get_All_Current_Personnel()
         return render_template("View-Users.html", data= personnel)
+#Personnel Database View Users
+@app.route('/Update-User', methods=["POST", "GET"])
+def update_User():
+    from Backend import get_All_Current_Personnel
+    if request.method == "POST":
+        if request.form['submit_button'] == 'go_back':
+            return redirect(url_for("main_Menu"))
+        elif request.form['submit_button'] == 'search':
+            from Backend import read_JSON_Personal_File
+            user_search_choice = request.form.get("user_choice_preview")
+
+            user_photo_src = user_search_choice.replace(" ","_") +".jpg"
+            user_data = read_JSON_Personal_File(request.form.get("user_choice_preview"))
+            personnel = get_All_Current_Personnel()
+
+            return render_template("Update-User.html", data= personnel, user_information = user_data, user_img = user_photo_src)
+        elif request.form['submit_button'] == 'update_user':
+            from Backend import updated_JSON_Personnel_File
+            data_to_store = request.form.getlist("user_info")
+            updated_JSON_Personnel_File(data_to_store)
+            print(data_to_store)
+
+
+            personnel = get_All_Current_Personnel()
+            return render_template("Update-User.html", data=personnel)
+
+    else:
+        personnel = get_All_Current_Personnel()
+        return render_template("Update-User.html", data= personnel)
+
 
 #OBS to OCR Application
 @app.route('/Plate-Scanner', methods=["POST", "GET"])

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Users</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+<form action="{{ url_for('update_User') }}" enctype=multipart/form-data method="POST">
+    <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col-6" align="center">
+            <h1>Update User</h1>
+        </div>
+        <div class="col-3"></div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col-3">
+
+            <select class="form-select" aria-label="Default select example" onselect="showUserImage()"
+                    id="user_choice_preview" name="user_choice_preview">
+                <option selected>Choose Personnel</option>
+                {% for person in data %}
+                    <option value="{{ person }}">{{ person }}</option>
+                {% endfor %}
+
+            </select>
+
+
+        </div>
+        <div class="col-3" align="center">
+            <button type="submit" name="submit_button" value="search"
+                    class="btn btn-primary btn-block mb-4">
+                Search Personnel
+            </button>
+            <button type="submit" name="submit_button" value="go_back"
+                    class="btn btn-primary btn-block mb-4">
+                Go Back
+            </button>
+
+
+            <div class="col-3"></div>
+
+        </div>
+    </div>
+
+
+    {% if user_information %}
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+
+                {% for key, value in user_information.items() %}
+                    <h2><b>{{ key }}</b></h2>
+                    {% if key == "Likes" %}
+                        {% for like in value %}
+                            <div class="form-group">
+                                <label for="{{ like }}"></label>
+                                <input type="text" class="form-control" id="{{ value }}"
+                                   aria-describedby="{{ like }}" value="{{ like }}" name="user_info">
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="form-group">
+
+                            <label for="{{ like }}">{{ like }}</label>
+                            <input type="text" class="form-control" id="{{ like }}"
+                                   aria-describedby="{{ like }}" value="{{ value }}" name="user_info">
+
+
+                        </div>
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-4">
+                <button type="submit" name="submit_button" value="update_user"
+                        class="btn btn-primary btn-block mb-4">
+                    Update Personnel
+                </button>
+                <img src="static/uploads/{{ user_img }}" alt="No image yet" style="width:500px;height:600px;">
+                <h3>Want to upload a different photo?</h3>
+                <input type="file" id="user_img" name="user_img" accept="image/*" class="form-control form-control-lg">
+            </div>
+        </div>
+        <div class="col-2"></div>
+
+        </div>
+    {% endif %}
+
+
+</form>
+
+
+</body>
+</html>
