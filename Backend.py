@@ -50,7 +50,12 @@ def updated_JSON_Personnel_File(info_list):
 
 
     for index, key in enumerate(data.keys()):
-        data[key] = info_list[index]
+        try:
+            data[key] = info_list[index]
+        except IndexError as e:
+            print("Error: " + str(e))
+            print("Index: " + str(index) + " Key: " + key)
+            pass
 
     with open(user, "w") as jsonFile:
         json.dump(data, jsonFile)
@@ -61,24 +66,5 @@ def get_All_Current_Personnel():
     personnel = [x.replace(".json","") for x in os.listdir("Users")]
     return personnel
 
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
-    updated_JSON_Personnel_File("Don Capodilupo",
-                                {
-                                    "Name": "Don Capodilupo",
-                                    "Dob": "",
-                                    "Gender": "Male",
-                                    "Address": "",
-                                    "Employer": "",
-                                    "Marital Status": "Unknown",
-                                    "Cheeseburger": "Hardvard AND Yale",
-
-                                }
-                                )
+    updated_JSON_Personnel_File("Don Capodilupo")
