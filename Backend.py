@@ -1,4 +1,4 @@
-import datetime
+import datetime, os
 
 
 today = str(datetime.date.today())
@@ -60,11 +60,13 @@ def updated_JSON_Personnel_File(info_list):
     with open(user, "w") as jsonFile:
         json.dump(data, jsonFile)
 
+def delete_JSON_Personnel_File(user):
+    os.replace("Users/" + user + ".json", "Retired Users/" + user + ".json")
+
 #For the personnel viewing application
 def get_All_Current_Personnel():
-    import os
     personnel = [x.replace(".json","") for x in os.listdir("Users")]
     return personnel
 
 if __name__ == '__main__':
-    updated_JSON_Personnel_File("Don Capodilupo")
+    delete_JSON_Personnel_File("Don Capodilupo")
