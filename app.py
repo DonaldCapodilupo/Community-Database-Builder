@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import os
 
 app = Flask(__name__)
 
@@ -103,10 +104,17 @@ def update_User():
             return render_template("Update-User.html", data= personnel, user_information = user_data, user_img = user_photo_src)
         elif request.form['submit_button'] == 'update_user':
             from Backend import updated_JSON_Personnel_File
+            from werkzeug.utils import secure_filename
             data_to_store = request.form.getlist("user_info")
             updated_JSON_Personnel_File(data_to_store)
             print(data_to_store)
 
+            app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+            uploaded_file = request.files['user_img']
+            if uploaded_file.filename != '':
+                filename = secure_filename(data_to_store[0]) + '.jpg'
+                uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             personnel = get_All_Current_Personnel()
             return render_template("Update-User.html", data=personnel)
@@ -121,8 +129,8 @@ def update_User():
 def plates_Scraper():
     if request.method == "POST":
         if request.form['submit_button'] == 'scan_plate':
-            from Backend import get_screenshot
-            plate_num = get_screenshot()
+            from Investigative_Functions import screenshot_OBS_Attempt_OCR
+            plate_num = screenshot_OBS_Attempt_OCR()
             print(plate_num)
             return render_template("Plate_Scraper.html", data=plate_num)
         elif request.form['submit_button'] == 'go_back':
@@ -135,9 +143,9 @@ def plates_Scraper():
 def likes_Scraper():
     if request.method == "POST":
         if request.form['submit_button'] == 'get_likes':
-            from Backend import get_Facebook_Interests
+            from Investigative_Functions import scrape_Facebook_Likes
             print(str(request.form["text_to_scrape"]))
-            likes_data = get_Facebook_Interests(str(request.form["text_to_scrape"]))
+            likes_data = scrape_Facebook_Likes(str(request.form["text_to_scrape"]))
             return render_template("Likes_Scraper.html", data=likes_data)
         elif request.form['submit_button'] == 'go_back':
             return redirect(url_for("main_Menu"))
@@ -147,7 +155,7 @@ def likes_Scraper():
 #Manual License Plate Recording Software
 @app.route('/Dashboard', methods=["POST", "GET"])
 def dashboard():
-    from Backend import vehicles, colors, csv_To_HTML
+    from Investigative_Functions import vehicles, colors, csv_To_HTML
     if request.method == "POST":
         if request.form['submit_button'] == 'upload_plate':
             from Backend import writeToCSV, today
