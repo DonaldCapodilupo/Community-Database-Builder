@@ -28,6 +28,21 @@ body{
     text-align: center;
 }
 
+.confirmation_div{
+    background: #BFB1C1;
+    color: #FCDC4D;
+}
+
+.form_div{
+    background: #9AD5CA;
+    padding: 15px;
+}
+
+label{
+    font-weight: bold;
+}
+
+
 
 p{
     text-align: center;

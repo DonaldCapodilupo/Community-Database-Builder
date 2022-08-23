@@ -12,6 +12,7 @@
             crossorigin="anonymous"></script>
 
     <script src="../static/Add-User.js"></script>
+    <link rel="stylesheet" href="../static/CSS/main.css">
 
 </head>
 <body>
@@ -19,176 +20,140 @@
 
 <form action="{{ url_for('add_User') }}" enctype=multipart/form-data method="POST">
     <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <h1>Add a user</h1>
-            {% if confirrmation %}
-                <h3>{{ confirrmation }} has been added to the database!</h3>
-            {% endif %}
-        </div>
-        <div class="col-4"></div>
-    </div>
-
-    <div class="row">
         <div class="col-3"></div>
-        <div class="col-3">
-            <div class="form-group">
-                <label for="new_username">Name</label>
-                <input type="text" class="form-control" id="new_username" name="new_username"
-                       placeholder="John Doe" required>
-            </div>
-
-            <div class="form-group">
-                <label for="date_of_birth">Date of Birth</label>
-                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
-            </div>
-
-            <div class="form-group">
-                <label for="gender">Gender</label>
-                <select class="form-control" id="gender" name="gender"></select>
-            </div>
-
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" name="address">
-            </div>
-
-            <div class="form-group">
-                <label for="employer">Employer</label>
-                <input type="text" class="form-control" id="employer" name="employer">
-            </div>
-
-            <div class="form-group">
-                <label for="marital_status">Marital Status</label>
-                <select class="form-control" id="marital_status" name="marital_status"></select>
-            </div>
-
-            <div class="form-group">
-                <label for="education">Education</label>
-                <input type="text" class="form-control" id="education" name="education">
-            </div>
-            <div class="form-group">
-                <label for="languages">Languages</label>
-                <input type="text" class="form-control" id="languages" name="languages">
-            </div>
-            <div class="form-group">
-                <label for="political_affiliation">Political Affiliation</label>
-                <select class="form-control" id="political_affiliation" name="political_affiliation"></select>
-            </div>
-
-            <div class="form-group">
-                <label for="family_members">Family Members</label>
-                <input type="text" class="form-control" id="family_members" name="family_members">
-            </div>
-
-            <br>
-            <br>
-
-            <div class="form-group">
-                <label for="confirmed_criminal_activity">Confirmed Criminal Activity</label>
-                <input type="text" class="form-control input-lg" id="confirmed_criminal_activity"
-                       name="confirmed_criminal_activity">
-            </div>
-
-            <br>
-            <br>
-
-            <div class="form-group">
-                <label for="possible_criminal_activity">Possible Criminal Activity</label>
-                <input type="text" class="form-control input-lg" id="possible_criminal_activity"
-                       name="possible_criminal_activity">
-            </div>
-
+        <div class="col-6 grid justify-content-center">
+            <!--Title and Confirmation -->
             <div class="row">
-
-                <div class="col-12" align="center">
-                    <h1>Facebook Likes Scraper</h1>
+                <div class="title_div">
+                    <h1 class="display-2">Add a user</h1>
                 </div>
-
-            </div>
-
-            <br>
-            <br>
-
-            <div class="row">
-
-                <div class="col-12" align="center">
-                    <div class="form-group">
-                        <label for="text_to_scrape">
-                            Paste div starting with j83agx80 into the field.
-                        </label>
-                        <textarea class="form-control" name="text_to_scrape" id="text_to_scrape" rows="10"></textarea>
+                {% if confirrmation %}
+                    <div class="confirmation_div">
+                        <h3 class="display-5">{{ confirrmation }} has been added to the database!</h3>
                     </div>
-                </div>
-
+                {% endif %}
             </div>
-
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit" name="submit_button" value="get_likes"
-                                    class="btn btn-primary btn-block mb-4">
-                                Record Facebook Likes
-                            </button>
+            <!--Forms-->
+            <div class="form_div">
+                <div class="row">
+                    <!--Name through facebook likes.-->
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="new_username">Name</label>
+                            <input type="text" class="form-control" id="new_username" name="new_username"
+                                   placeholder="John Doe" required>
                         </div>
-                        <div class="col-4">
-                            <button type="submit" name="submit_button" value="go_back"
-                                    class="btn btn-primary btn-block mb-4">
-                                Go Back
-                            </button>
+
+                        <div class="form-group">
+                            <label for="date_of_birth">Date of Birth</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender" name="gender"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="employer">Employer</label>
+                            <input type="text" class="form-control" id="employer" name="employer">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="marital_status">Marital Status</label>
+                            <select class="form-control" id="marital_status" name="marital_status"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="education">Education</label>
+                            <input type="text" class="form-control" id="education" name="education">
+                        </div>
+                        <div class="form-group">
+                            <label for="languages">Languages</label>
+                            <input type="text" class="form-control" id="languages" name="languages">
+                        </div>
+                        <div class="form-group">
+                            <label for="political_affiliation">Political Affiliation</label>
+                            <select class="form-control" id="political_affiliation"
+                                    name="political_affiliation"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="family_members">Family Members</label>
+                            <input type="text" class="form-control" id="family_members" name="family_members">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmed_criminal_activity">Confirmed Criminal Activity</label>
+                            <input type="text" class="form-control input-lg" id="confirmed_criminal_activity"
+                                   name="confirmed_criminal_activity">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="possible_criminal_activity">Possible Criminal Activity</label>
+                            <input type="text" class="form-control input-lg" id="possible_criminal_activity"
+                                   name="possible_criminal_activity">
+                        </div>
+                        <br>
+                        <!--Facebook Scraper-->
+                        <div class="row">
+                            <h1>Facebook Likes Scraper</h1>
+                            <div class="form-group">
+                                <label for="text_to_scrape">
+                                    Paste div starting with j83agx80 into the field.
+                                </label>
+                                <textarea class="form-control" name="text_to_scrape" id="text_to_scrape"
+                                          rows="10"></textarea>
+                            </div>
+
                         </div>
 
                     </div>
 
+                    <!--Image viewer and buttons.-->
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="user_img">User Image:</label>
+                            <input type="file" id="user_img" name="user_img" accept="image/*"
+                                   class="form-control form-control-lg">
+                        </div>
+
+                        <img id="preview" alt="Uploaded file will display here." class="title3" width="200" src="">
+                        <script>showUserImage()</script>
+
+                        <br>
+                        <br>
+                        <div class="row">
+
+                            <div class="col-5">
+                                <button type="submit" name="submit_button" value="upload_new_user"
+                                        class="btn btn-primary btn-block mb-4">
+                                    Upload New User
+                                </button>
+                            </div>
+                            <div class="col-4"></div>
+                            <div class="col-3">
+                                <button type="submit" name="submit_button" value="go_back"
+                                        class="btn btn-primary btn-block mb-4">
+                                    Go Back
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
 
                 </div>
-                <div class="col-3"></div>
-
             </div>
-
-
-        </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label for="user_img">User Image:</label>
-                <input type="file" id="user_img" name="user_img" accept="image/*" class="form-control form-control-lg">
-            </div>
-            <img id="preview" alt="Uploaded file will display here." class="title3" width="200" src="">
-            <script>showUserImage()</script>
-
-            <br>
-            <br>
-            <div class="row">
-
-                <div class="col-5">
-                    <button type="submit" name="submit_button" value="upload_new_user"
-                            class="btn btn-primary btn-block mb-4">
-                        Upload New User
-                    </button>
-                </div>
-                <div class="col-4"></div>
-                <div class="col-3">
-                    <button type="submit" name="submit_button" value="go_back"
-                            class="btn btn-primary btn-block mb-4">
-                        Go Back
-                    </button>
-                </div>
-            </div>
-
-
         </div>
         <div class="col-3"></div>
     </div>
 
-
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-3"></div>
-        <div class="col-3"></div>
-        <div class="col-3"></div>
-    </div>
 
     <script>
         populateLists()
