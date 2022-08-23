@@ -14,7 +14,7 @@ def writeToCSV(listOfInfo):
 #For the license plate logging application.
 def csv_To_HTML():
     import pandas as pd
-    data = pd.read_csv("data.csv").to_html(classes="table", index=False, table_id="datatable").replace("<thead>",
+    data = pd.read_csv("data.csv").to_html(classes="table table-dark", index=False, table_id="datatable").replace("<thead>",
                                                                                                        "<thead class='thead-light'>")
     text_file = open("templates/data.html", "w")
     text_file.write(data)
