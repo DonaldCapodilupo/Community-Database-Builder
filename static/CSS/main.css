@@ -28,6 +28,11 @@ body{
     text-align: center;
 }
 
+.searchbar_div{
+    background: #1E212B;
+
+}
+
 .confirmation_div{
     background: #BFB1C1;
     color: #FCDC4D;

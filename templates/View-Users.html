@@ -12,6 +12,8 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="../static/CSS/main.css">
+
 </head>
 <body>
 
@@ -21,73 +23,73 @@
         <div class="col-3"></div>
 
         <div class="col-6" align="center">
-            <h1>View Users</h1>
+            <div class="title_div">
+                <h1>View Users</h1>
+            </div>
+            <div class="searchbar_div">
+                <div class="row">
+                    <!--Personnel Selector Dropdown-->
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" onselect="showUserImage()"
+                                id="user_choice_preview" name="user_choice_preview">
+                            <option selected>Choose Personnel</option>
+                            {% for person in data %}
+                                <option value="{{ person }}">{{ person }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <!--Submit and Go Back Buttons-->
+                    <div class=col>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" name="submit_button" value="search"
+                                        class="btn btn-primary btn-block mb-4">
+                                    Search Personnel
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="submit" name="submit_button" value="go_back"
+                                        class="btn btn-primary btn-block mb-4">
+                                    Go Back
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {% if user_information %}
+                <div class="form_div">
+                    <div class="row">
+                        <div class="col">
+                            {% for key, value in user_information.items() %}
+                                <h2><b>{{ key }}</b></h2>
+                                {% if key == "Likes" %}
+                                    {% for like in value %}
+                                        <h3>{{ like }}</h3>
+                                        <br>
+                                    {% endfor %}
+                                {% else %}
+                                    <h3>{{ value }}</h3>
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col">
+                            <img src="static/uploads/{{ user_img }}" alt="No image yet"
+                                 style="width:500px;height:600px;">
+                        </div>
+
+
+                    </div>
+                </div>
+            {% endif %}
+
         </div>
         <div class="col-3"></div>
-
     </div>
-
-
-    <div class="row">
-        <div class="col-3"></div>
-
-        <div class="col-3">
-
-            <select class="form-select" aria-label="Default select example" onselect="showUserImage()"
-                    id="user_choice_preview" name="user_choice_preview">
-                <option selected>Choose Personnel</option>
-                {% for person in data %}
-                    <option value="{{ person }}">{{ person }}</option>
-                {% endfor %}
-
-            </select>
-
-
-        </div>
-        <div class="col-3" align="center">
-            <button type="submit" name="submit_button" value="search"
-                    class="btn btn-primary btn-block mb-4">
-                Search Personnel
-            </button>
-            <button type="submit" name="submit_button" value="go_back"
-                    class="btn btn-primary btn-block mb-4">
-                Go Back
-            </button>
-
-
-            <div class="col-3"></div>
-
-        </div>
-    </div>
-
-
-    {% if user_information %}
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-4">
-
-                {% for key, value in user_information.items() %}
-                    <h2><b>{{ key }}</b></h2>
-                    {% if key == "Likes" %}
-                        {% for like in value %}
-                            <h3>{{ like }}</h3>
-                            <br>
-                        {% endfor %}
-                    {% else %}
-                        <h3>{{ value }}</h3>
-                        <br>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            <div class="col-4">
-                <img src="static/uploads/{{ user_img }}" alt="No image yet" style="width:500px;height:600px;">
-            </div>
-            <div class="col-2"></div>
-
-        </div>
-    {% endif %}
-
-
 </form>
 
 
