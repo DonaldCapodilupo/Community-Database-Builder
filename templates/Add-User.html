@@ -104,11 +104,24 @@
                         <div class="row">
                             <h1>Facebook Likes Scraper</h1>
                             <div class="form-group">
-                                <label for="text_to_scrape">
-                                    Paste div starting with j83agx80 into the field.
-                                </label>
-                                <textarea class="form-control" name="text_to_scrape" id="text_to_scrape"
-                                          rows="10"></textarea>
+                                <div class="label_text_div">
+                                    <label for="div_to_scrape">Div to Scrape:</label>
+                                </div>
+                                <input type="text" class="form-control" id="div_to_scrape" name="div_to_scrape">
+                            </div>
+
+                            <br>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="label_text_div">
+                                        <label for="text_to_scrape">
+                                            Paste the entirety of the HTML here.
+                                        </label>
+                                    </div>
+                                    <textarea class="form-control" name="text_to_scrape" id="text_to_scrape"
+                                              rows="10"></textarea>
+                                </div>
                             </div>
 
                         </div>

@@ -47,8 +47,13 @@ label{
     font-weight: bold;
 }
 
-
+.label_text_div{
+    background: #9AD5CA;
+}
 
 p{
     text-align: center;
+}
+.results_div{
+    background: #9AD5CA;
 }

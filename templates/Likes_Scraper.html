@@ -9,6 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"
+            integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <link rel="stylesheet" href="../static/CSS/main.css">
 </head>
 <body>
 
@@ -17,30 +24,46 @@
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6" align="center">
-            <h1>Facebook Likes Scraper</h1>
-        </div>
-        <div class="col-3"></div>
-    </div>
-
-    <br>
-    <br>
-
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8" align="center">
-            <div class="form-group">
-                <label for="text_to_scrape">
-                    Paste div starting with j83agx80 into the field.
-                </label>
-                <textarea class="form-control" name="text_to_scrape" id="text_to_scrape" rows="10"></textarea>
+            <div class="row">
+                <div class="title_div">
+                    <h1>Facebook Likes Scraper</h1>
+                </div>
             </div>
-        </div>
-        <div class="col-2"></div>
-    </div>
 
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
+            <br>
+
+            <div class="form-group">
+                <div class="label_text_div">
+                    <label for="div_to_scrape">Div to Scrape:</label>
+                </div>
+                <input type="text" class="form-control" id="div_to_scrape" name="div_to_scrape">
+            </div>
+
+            <br>
+
+            <img src=../static/Application%20Images/Specific%20Likes%20Div.png alt="" height="500" width=900>
+
+
+            <br>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="label_text_div">
+                        <label for="text_to_scrape">
+                            Paste the entirety of the HTML here.
+                        </label>
+                    </div>
+                    <textarea class="form-control" name="text_to_scrape" id="text_to_scrape" rows="10"></textarea>
+                </div>
+            </div>
+
+            <br>
+
+
+            <img src=../static/Application%20Images/Total%20Likes%20Div.png alt="" height="500" width="900">
+
+            <br>
+
             <div class="row">
                 <div class="col">
                     <button type="submit" name="submit_button" value="get_likes"
@@ -48,31 +71,34 @@
                         Record Facebook Likes
                     </button>
                 </div>
-                <div class="col-4">
+                <div class="col">
                     <button type="submit" name="submit_button" value="go_back"
                             class="btn btn-primary btn-block mb-4">
                         Go Back
                     </button>
                 </div>
 
+
             </div>
 
+            <br>
 
-        </div>
-        <div class="col-3"></div>
+            {% if data %}
+
+                <div class="row">
+                    <div class="results_div">
+                        {% for like in data %}
+                            {{ like }}
+                            <br>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                </div>
+            {% endif %}
 
     </div>
-
-
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            {% for like in data %}
-                {{ like }}
-                <br>
-            {% endfor %}
-        </div>
-        <div class="col-3"></div>
+    <div class="col-3"></div>
     </div>
 
 

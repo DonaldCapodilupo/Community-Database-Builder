@@ -2,7 +2,7 @@
 #These functions are all related to capturing information.
 
 #Facebook scraper application and is also a part of For the personnel logging application.
-def scrape_Facebook_Likes(html_user_input):
+def scrape_Facebook_Likes(html_user_input, likes_div):
     from bs4 import BeautifulSoup
 
     return_List = []
@@ -12,7 +12,9 @@ def scrape_Facebook_Likes(html_user_input):
     soup = BeautifulSoup(html_user_input, 'html.parser')
 
     spans = soup.find_all(
-        class_="d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d3f4x2em iv3no6db jq4qci2q a3bd9o3v lrazzd5p oo9gr5id hzawbc8m")
+        class_=likes_div)
+    #class_="d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d3f4x2em iv3no6db jq4qci2q a3bd9o3v lrazzd5p oo9gr5id hzawbc8m")
+
 
     for text in spans:
         print(text.string)
@@ -27,6 +29,7 @@ def screenshot_OBS_Attempt_OCR():
     import cv2
     import os
     import pygetwindow as gw
+    #from PIL import Image
 
     win_obs = gw.getWindowsWithTitle('Fullscreen Projector')[0]
     win_app = gw.getWindowsWithTitle('Plate Scraper')[0]
