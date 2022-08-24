@@ -58,7 +58,7 @@ def add_User():
 
 
             print(str(request.form["text_to_scrape"]))
-            likes_data = scrape_Facebook_Likes(str(request.form["text_to_scrape"]))
+            likes_data = scrape_Facebook_Likes(str(request.form["text_to_scrape"]), str(request.form["div_to_scrape"]))
             personnel_info["Likes"] = likes_data
 
             create_JSON_Personal_File(personnel_info, personnel_info["Photo"])
@@ -155,7 +155,8 @@ def likes_Scraper():
         if request.form['submit_button'] == 'get_likes':
             from Investigative_Functions import scrape_Facebook_Likes
             print(str(request.form["text_to_scrape"]))
-            likes_data = scrape_Facebook_Likes(str(request.form["text_to_scrape"]))
+            print(str(request.form["div_to_scrape"]))
+            likes_data = scrape_Facebook_Likes(str(request.form["text_to_scrape"]), str(request.form["div_to_scrape"]))
             return render_template("Likes_Scraper.html", data=likes_data)
         elif request.form['submit_button'] == 'go_back':
             return redirect(url_for("main_Menu"))
