@@ -2,13 +2,13 @@
 
 const politics = ["Unknown", "Democrat", "Republican", "Other"];
 
-const gender = ["Male", "Female", "Other", "Unknown"];
+const gender = ["Unknown", "Male", "Female", "Other", "Unknown"];
 
 const marital_status = ["Unknown", "Single", "In a Relationship", "Married", "Unknown"];
 
-const eye_color = ["Amber", "Blue", "Brown", "Gray", "Green", "Hazel", "Red"];
+const eye_color = ["Unknown", "Amber", "Blue", "Brown", "Gray", "Green", "Hazel", "Red"];
 
-const hair_color = ["Blonde", "Brunette", "Red", "Black"];
+const hair_color = ["Unknown","Blonde", "Brunette", "Red", "Black"];
 
 const json = `[
   {
@@ -1559,9 +1559,6 @@ const json = `[
 
 
 function populateLists() {
-    var brand_select_list = document.getElementById("Brand");
-    var color_select_list = document.getElementById("Color");
-
     const lists_to_populate = [eye_color, hair_color, marital_status, politics, gender];
     const div_ids = ["eye_color", "hair_color", "marital_status", "politics", "gender"];
 
@@ -1598,6 +1595,4 @@ function showUserImage() {
         const blobURL = URL.createObjectURL(file);
         img.src = blobURL;
     };
-
-
 }
