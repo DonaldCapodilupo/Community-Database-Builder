@@ -1559,31 +1559,30 @@ const json = `[
   }
 ]`;
 
+const eye_color = ["Amber", "Blue", "Brown", "Gray", "Green", "Hazel", "Red"];
+
+const hair_color = ["Blonde", "Brunette", "Red", "Black"];
+
 
 function populateLists() {
     var brand_select_list = document.getElementById("Brand");
     var color_select_list = document.getElementById("Color");
 
+    const lists_to_populate = [colors, eye_color, hair_color];
+
     let car_data = JSON.parse(json);
 
-    //Fills the "Brand" dropdown correctly.
-    for (let i = 0; i < car_data.length; i++) {
-        //console.log(car_data[i]["brand"]);
-        var opt = car_data[i]["brand"];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        brand_select_list.appendChild(el);
+    for (let i = 0; i < lists_to_populate; i++) {
+        for (let i = 0; i < i.length; i++) {
+            //console.log(car_data[i]["brand"]);
+            var opt = car_data[i]["brand"];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            brand_select_list.appendChild(el);
+        }
     }
 
-    //Populates the list of colors to choose from.
-    for (var i = 0; i < colors.length; i++) {
-        var opt = colors[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        color_select_list.appendChild(el);
-    }
 }
 
 function populateModelList() {
@@ -1598,6 +1597,7 @@ function populateModelList() {
             model_select_list.remove(i);
         }
     }
+
     removeOptions();
 
     //Find the model list in the JSON and append the list to the drop down menu.
