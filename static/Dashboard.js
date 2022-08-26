@@ -1,12 +1,6 @@
 /* global console*/
 /*jshint esversion: 6 */
 
-const car_list = [
-    'Toyota', 'Honda', 'Chevrolet', 'Ford', 'Mercedes-Benz', 'Jeep', 'BMW', 'Porsche', 'Subaru', 'Nissan', 'Cadillac',
-    'Volkswagen', 'Lexus', 'Audi', 'Volvo', 'Jaguar', 'GMC', 'Buick', 'Acura', 'Dodge', 'Hyundai',
-    'Lincoln', 'Mazda', 'Land Rover', 'Tesla', 'Ram Trucks', 'Kia', 'Chrysler', 'Pontiac', 'Infiniti', 'Mitsubishi',
-    'Oldsmobile', 'Fiat', 'Mini Cooper', 'Suzuki'
-];
 
 const colors = [
     "Black", "Silver", "White", "Grey", "Red", "Blue", "Brown", "Green", "Beige", "Orange", "Gold", "Yellow",
@@ -1557,32 +1551,33 @@ const json = `[
       "GVX"
     ]
   }
-]`;
-
-const eye_color = ["Amber", "Blue", "Brown", "Gray", "Green", "Hazel", "Red"];
-
-const hair_color = ["Blonde", "Brunette", "Red", "Black"];
+]`
 
 
 function populateLists() {
     var brand_select_list = document.getElementById("Brand");
     var color_select_list = document.getElementById("Color");
 
-    const lists_to_populate = [colors, eye_color, hair_color];
-
     let car_data = JSON.parse(json);
 
-    for (let i = 0; i < lists_to_populate; i++) {
-        for (let i = 0; i < i.length; i++) {
-            //console.log(car_data[i]["brand"]);
-            var opt = car_data[i]["brand"];
-            var el = document.createElement("option");
-            el.textContent = opt;
-            el.value = opt;
-            brand_select_list.appendChild(el);
-        }
+    //Fills the "Brand" dropdown correctly.
+    for (let i = 0; i < car_data.length; i++) {
+        //console.log(car_data[i]["brand"]);
+        var opt = car_data[i]["brand"];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        brand_select_list.appendChild(el);
     }
 
+    //Populates the list of colors to choose from.
+    for (var i = 0; i < colors.length; i++) {
+        var opt = colors[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        color_select_list.appendChild(el);
+    }
 }
 
 function populateModelList() {
@@ -1617,25 +1612,6 @@ function populateModelList() {
 
 
     }
-
-}
-
-
-function getInput() {
-    let house_number = document.getElementById("House_Number").value;
-    let street_name = document.getElementById("Street").value;
-    let brand = document.getElementById("Brand").value;
-    let color = document.getElementById("Color").value;
-    let license_plate_num = document.getElementById("License Plate #").value;
-
-    console.log(house_number);
-    console.log(street_name);
-    console.log(brand);
-    console.log(color);
-    console.log(license_plate_num);
-
-
-    return [house_number, street_name, brand, color, license_plate_num];
 
 }
 
