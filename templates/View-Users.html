@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-3"></div>
 
-        <div class="col-6" align="center">
+        <div class="col-6">
             <div class="title_div">
                 <h1>View Users</h1>
             </div>
@@ -65,14 +65,13 @@
                     <div class="row">
                         <div class="col">
                             {% for key, value in user_information.items() %}
-                                <h2><b>{{ key }}</b></h2>
+                                <h3><b>{{ key }}</b></h3>
                                 {% if key == "Likes" %}
                                     {% for like in value %}
-                                        <h3>{{ like }}</h3>
-                                        <br>
+                                        <p>{{ like }}</p>
                                     {% endfor %}
                                 {% else %}
-                                    <h3>{{ value }}</h3>
+                                    <p>{{ value }}</p>
                                     <br>
                                 {% endif %}
                             {% endfor %}
