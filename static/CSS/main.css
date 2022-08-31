@@ -57,3 +57,9 @@ p{
 .results_div{
     background: #9AD5CA;
 }
+
+
+.correction_needed_div{
+    background: #FCDC4D;
+    color: #1E212B;
+}

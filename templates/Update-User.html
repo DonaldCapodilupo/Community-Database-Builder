@@ -60,6 +60,15 @@
                 </div>
             </div>
 
+            <!--User hit submit without choosing anyone.-->
+            {% if confirmation %}
+                <div class="col">
+                    <div class="correction_needed_div">
+                        <h1 class="display-2 d-flex justify-content-center">Invalid User Selection</h1>
+                    </div>
+                </div>
+            {% endif %}
+
             {% if user_information %}
                 <div class="form_div">
                     <div class="row">
