@@ -114,7 +114,7 @@ def update_User():
                 user_data = read_JSON_Personal_File(request.form.get("user_choice_preview"))
 
 
-            return render_template("Update-User.html", data= personnel, user_information = user_data, user_img = user_photo_src)
+                return render_template("Update-User.html", data= personnel, user_information = user_data, user_img = user_photo_src)
         elif request.form['submit_button'] == 'update_user':
             from Backend import updated_JSON_Personnel_File
             from werkzeug.utils import secure_filename
