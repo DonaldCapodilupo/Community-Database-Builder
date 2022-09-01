@@ -1560,7 +1560,7 @@ const json = `[
 
 function populateLists() {
     const lists_to_populate = [eye_color, hair_color, marital_status, politics, gender];
-    const div_ids = ["eye_color", "hair_color", "marital_status", "politics", "gender"];
+    const div_ids = ["eye_color", "hair_color", "marital_status", "political_affiliation", "gender"];
 
     let car_data = JSON.parse(json);
 
