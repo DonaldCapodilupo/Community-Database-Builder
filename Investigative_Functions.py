@@ -1,7 +1,6 @@
+# These functions are all related to capturing information.
 
-#These functions are all related to capturing information.
-
-#Facebook scraper application and is also a part of For the personnel logging application.
+# Facebook scraper application and is also a part of For the personnel logging application.
 def scrape_Facebook_Likes(html_user_input, likes_div):
     from bs4 import BeautifulSoup
 
@@ -13,8 +12,7 @@ def scrape_Facebook_Likes(html_user_input, likes_div):
 
     spans = soup.find_all(
         class_=likes_div)
-    #class_="d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d3f4x2em iv3no6db jq4qci2q a3bd9o3v lrazzd5p oo9gr5id hzawbc8m")
-
+    # class_="d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d3f4x2em iv3no6db jq4qci2q a3bd9o3v lrazzd5p oo9gr5id hzawbc8m")
 
     for text in spans:
         print(text.string)
@@ -22,14 +20,15 @@ def scrape_Facebook_Likes(html_user_input, likes_div):
 
     return return_List
 
-#Run OBS, wait for a screenshot to be taken, and then attempt to OCR the screenshot. For plate scanning application.
+
+# Run OBS, wait for a screenshot to be taken, and then attempt to OCR the screenshot. For plate scanning application.
 def screenshot_OBS_Attempt_OCR():
     import time
     import pytesseract
     import cv2
     import os
     import pygetwindow as gw
-    #from PIL import Image
+    # from PIL import Image
 
     win_obs = gw.getWindowsWithTitle('Fullscreen Projector')[0]
     win_app = gw.getWindowsWithTitle('Plate Scraper')[0]
@@ -72,3 +71,31 @@ def screenshot_OBS_Attempt_OCR():
 
     os.remove("Screenshots/" + check_directory[1])
     return possible_plate_data
+
+
+def scrape_Paywall_Article(html_url):
+    from bs4 import BeautifulSoup
+    import requests
+
+    soup = BeautifulSoup(requests.get(html_url).text, 'html.parser')
+
+    with open("templates/scraped_article.html", "w", encoding="utf-8") as file:
+        file.write("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>  
+        """)
+
+        if "lowellsun" in html_url:
+            file.write(str(soup.body.find(class_='site-main')))
+        elif "bostonglobe" in html_url:
+            file.write(str(soup.body.find(class_='left col - tablet-12 desktop-8 padding_horizontal_16')))
+
+        else:
+            file.write("Can't access that website yet.")
+        file.write("""
+</body>""")
+
+    #return soup.find_all(class_='mark-text').text if not AttributeError else soup.text.replace('.', '. ')

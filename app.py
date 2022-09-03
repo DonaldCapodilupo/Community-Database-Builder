@@ -20,6 +20,8 @@ def main_Menu():
             return redirect(url_for("update_User"))
         elif request.form['submit_button'] == 'delete_users':
             return redirect(url_for("delete_User"))
+        elif request.form['submit_button'] == 'scrape_news_paper':
+            return redirect(url_for("newspaper_Website_Scraper"))
 
     else:
         return render_template("main.html")
@@ -174,6 +176,19 @@ def likes_Scraper():
             return redirect(url_for("main_Menu"))
     else:
         return render_template("Likes_Scraper.html", data=[])
+
+#Scrape Facebook Likes
+@app.route('/Newspaper-Website-Scraper', methods=["POST", "GET"])
+def newspaper_Website_Scraper():
+    if request.method == "POST":
+        if request.form['submit_button'] == 'scrape_user_url':
+            from Investigative_Functions import scrape_Paywall_Article
+            news_data = scrape_Paywall_Article(str(request.form["user_url"]))
+            return render_template("Scrape-News-Websites.html", data=True)
+        elif request.form['submit_button'] == 'go_back':
+            return redirect(url_for("main_Menu"))
+    else:
+        return render_template("Scrape-News-Websites.html", data=[])
 
 #Manual License Plate Recording Software
 @app.route('/Dashboard', methods=["POST", "GET"])
